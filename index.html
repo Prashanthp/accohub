@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="accolite">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>AccoHub - One stop search for accolite products</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/flat-ui.min.css" rel="stylesheet">
+		<link href="css/bootstrap-rating.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://mbenford.github.io/ngTagsInput/css/ng-tags-input.min.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+		<script src="http://mbenford.github.io/ngTagsInput/js/ng-tags-input.min.js"></script>
+		
+		
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="css/styles.css" rel="stylesheet">
+	</head>
+	<body ng-controller="MainCtrl">
+<!-- Header -->
+<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-toggle"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span class="fui-document"></span> AccoHub</a>
+    </div>
+  </div><!-- /container -->
+</div>
+<!-- /Header -->
+
+<!-- Main -->
+<div class="container">
+  
+  <!-- upper section -->
+  <div class="row">
+	<div class="col-sm-3">
+		<a class="btn btn-block btn-lg btn-primary" href="#">Sort By</a>
+      <hr>
+      <label class="radio">
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="likes" data-toggle="radio" checked="" ng-model="sort">
+            Likes
+          </label>
+          <label class="radio">
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="rating" data-toggle="radio" ng-model="sort">
+            Rating
+          </label>
+       
+      <hr>
+      <div class="well">Total Likes : <span class="badge">{{likes  || 3}}</span></div>
+  	</div><!-- /span-3 -->
+    <div class="col-sm-9">
+	   <div class="row">
+			<div class="row">
+				<!-- center left-->	
+				<div class="tagsinput-primary col-sm-6">
+					<tags-input ng-model="tags" add-on-paste="true">
+
+					  <auto-complete source="loadTags($query)"></auto-complete>
+
+					</tags-input>
+
+					<!-- <p>Model: {{tags}}</p> -->
+					<input name="tagsinput" class="tagsinput" data-role="tagsinput" value="" placeholder="Search (By Tag)" ng-model="search"/>
+					<div style="font-size:12px; font-weight:bold" id="results">Result: <span id="res">{{items.length}}</span> items found</div>
+				</div>
+				
+			</div>
+			<div class="panel panel-default " ng-repeat="x in items | orderBy:'-rating' " data-ng-init="init()" ng-animate=".animate-enter">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-sm-4"><a href="#" class=""><img src="{{x.image}}" class="img-responsive"></a>
+						</div>
+						<div class="col-sm-8">
+						  <h4 class="title"><a class="btn btn-block btn-lg btn-primary" href="#">{{x.name}}</a></h4>
+						  <p class="text-muted"><span class="glyphicon glyphicon-tags"></span> <span id="tag" ng-repeat="y in x.tags"><a href="#">{{y}}</a>,</span></p>
+						  <p><span class="glyphicon glyphicon-link"></span><a href="{{x.link}}">link</a></p>
+						  <p><span class="glyphicon glyphicon-thumbs-up"></span><a href="#" ng-click="likes">Like</a></p>
+						  <p><input type="hidden" class="rating" value="{{x.rating}}"/>
+							<input type="hidden" id="ratingVal" value="x.rating"/>	
+						  </p>
+						</div>
+						<p>
+							<div id="desc">{{x.description}}	</div>
+						</p>
+					</div>
+				</div>
+			</div>
+			</div> 
+		<div>
+            <ul class="pagination">
+              <li class="previous"><a class="fui-arrow-left" href="#"></a></li>           
+              <li><a href="#">Cyber Security</a></li>
+              <li class="active"><a href="#">Banking</a></li>
+              <li><a href="#">Insurance</a></li>             
+              <li class="next"><a class="fui-arrow-right" href="#"></a></li>
+            </ul>
+          </div>
+       </div><!--/row-->
+  	</div><!--/col-span-9-->
+    
+  </div><!--/row-->
+  <!-- /upper section -->
+   
+</div><!--/container-->
+<!-- /Main -->
+
+<div class="modal" id="addWidgetModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Add Widget</h4>
+      </div>
+      <div class="modal-body">
+        <p>Add a widget stuff here..</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dalog -->
+</div><!-- /.modal -->
+
+
+
+  
+	<!-- script references -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/flat-ui.min.js"></script>
+		<script src="js/radiocheck.js"></script>		
+		<script src="js/bootstrap-rating.js"></script>		
+
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+		$(function () {
+			$('[data-toggle="radio"]').radiocheck();
+			
+		});
+		
+		$('body').on('change', $('#ratingVal'), function() {
+		   $('.rating').rating();
+		});
+		</script>
+		<style>
+			.animate-enter {
+   -webkit-transition: 1s linear all; /* Chrome */
+   transition: 1s linear all;
+   opacity: 0;
+}
+.animate-enter.animate-enter-active {
+   opacity: 1;
+}
+		</style>
+	</body>
+</html>
